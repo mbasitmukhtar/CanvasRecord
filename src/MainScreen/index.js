@@ -51,18 +51,22 @@ export default class MainScreen extends Component {
         return items;
     }
 
+    goToNextScreen = (url) => {
+        this.props.navigation.navigate('CanvasScreen', { imageUrl: url });
+    }
+
     _renderItem = ({ item, index }) => {
         if (item.empty === true) {
             return (
                 <View style={styles.cardInvisible}>
-                    <TouchableOpacity style={styles.cardInvisible}>
-                    </TouchableOpacity>
+                    {/* <TouchableOpacity style={styles.cardInvisible}>
+                    </TouchableOpacity> */}
                 </View>
             )
         }
         return (
             <View style={styles.card}>
-                <TouchableOpacity style={styles.cardContainer}>
+                <TouchableOpacity style={styles.cardContainer} onPress={() => this.goToNextScreen(item.url)}>
                     <Image style={styles.cardImage} source={{ uri: item.url }}></Image>
                 </TouchableOpacity>
                 <Text style={styles.cardText}>{item.title}</Text>

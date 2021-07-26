@@ -8,6 +8,7 @@ import Login from './src/Login';
 import Register from './src/Register';
 import SplashScreen from './src/SplashScreen';
 import MainScreen from './src/MainScreen';
+import CanvasScreen from './src/CanvasScreen';
 
 const Stack = createStackNavigator();
 
@@ -20,6 +21,8 @@ const App = () => {
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="Register" component={Register} />
         <Stack.Screen name="MainScreen" component={MainScreen} />
+        <Stack.Screen name="CanvasScreen" component={CanvasScreen} />
+
       </Stack.Navigator>
 
     </NavigationContainer>
