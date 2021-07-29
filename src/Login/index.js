@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Image, Text, View, TextInput, Button, Alert, ActivityIndicator } from 'react-native';
+import { ImageBackground, Text, View, TextInput, Button, Alert, ActivityIndicator } from 'react-native';
 import styles from './styles'
 import firebase from '../../database/firebase';
 
@@ -39,6 +39,7 @@ export default class Login extends Component {
                         email: '',
                         password: ''
                     })
+
                     this.props.navigation.navigate('MainScreen')
                 })
                 .catch(error => {
@@ -48,7 +49,7 @@ export default class Login extends Component {
                         email: '',
                         password: ''
                     })
-                    alert('Please enter correct credentials');
+                    Alert.alert('Please enter correct credentials');
                 })
         }
     }
@@ -62,48 +63,46 @@ export default class Login extends Component {
             )
         }
         return (
-            <View style={styles.container}>
+            <ImageBackground source={require('../../images/bgsplash.png')} style={styles.container} >
 
                 <View style={styles.header}>
-                    <Image
-                        source={require('../../images/bgsplash.png')}
-                    />
-
                     <Text style={styles.text_header}>Welcome</Text>
                 </View>
 
                 <View style={styles.footer}>
-                    <Text style={styles.text_header}>Log In</Text>
-                    <View style={styles.container}>
+                    <Text style={styles.footer_heading}>Log In</Text>
 
-                        <TextInput
-                            style={styles.inputStyle}
-                            placeholder="Email"
-                            value={this.state.email}
-                            onChangeText={(val) => this.updateInputVal(val, 'email')}
-                        />
-                        <TextInput
-                            style={styles.inputStyle}
-                            placeholder="Password"
-                            value={this.state.password}
-                            onChangeText={(val) => this.updateInputVal(val, 'password')}
-                            maxLength={15}
-                            secureTextEntry={true}
-                        />
-                        <Button
-                            color="#3740FE"
-                            title="Sign In"
-                            onPress={() => this.userLogin()}
-                        />
+                    <TextInput
+                        style={styles.inputStyle}
+                        placeholder="Email"
+                        autoCapitalize="none"
+                        placeholderTextColor="#ccc"
+                        value={this.state.email}
+                        onChangeText={(val) => this.updateInputVal(val, 'email')}
+                    />
+                    <TextInput
+                        style={styles.inputStyle}
+                        autoCapitalize="none"
+                        placeholder="Password"
+                        placeholderTextColor="#ccc"
+                        value={this.state.password}
+                        onChangeText={(val) => this.updateInputVal(val, 'password')}
+                        maxLength={15}
+                        secureTextEntry={true}
+                    />
+                    <Button
+                        color="#3740FE"
+                        title="Sign In"
+                        onPress={() => this.userLogin()}
+                    />
 
-                        <Text
-                            style={styles.loginText}
-                            onPress={() => this.props.navigation.navigate('Register')}>
-                            Don't have account? Click here to signup
-                        </Text>
-                    </View>
+                    <Text
+                        style={styles.loginText}
+                        onPress={() => this.props.navigation.navigate('Register')}>
+                        Don't have account? Click here to Sign Up
+                    </Text>
                 </View>
-            </View >
+            </ImageBackground>
 
         );
     }

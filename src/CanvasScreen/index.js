@@ -3,8 +3,10 @@ import {
     ActivityIndicator,
     Text,
     View,
+    Image,
     PermissionsAndroid,
     Platform,
+    TouchableOpacity,
 
 } from 'react-native';
 
@@ -12,7 +14,7 @@ import styles from './styles';
 import RNSketchCanvas from '@terrylinla/react-native-sketch-canvas';
 // Import RNFetchBlob for the file download
 import RNFetchBlob from 'rn-fetch-blob';
-
+import RecordScreen from 'react-native-record-screen';
 
 export default class CanvasScreen extends Component {
 
@@ -22,7 +24,8 @@ export default class CanvasScreen extends Component {
             email: '',
             password: '',
             isLoading: true,
-            items: []
+            isRecording: false,
+            currentVideoUrl: '',
         }
     }
 
@@ -116,6 +119,36 @@ export default class CanvasScreen extends Component {
         console.log("end saving")
     }
 
+    startStopRecording = async () => {
+        // recording start
+        if (this.state.isRecording) {
+            // recording stop
+            const res = await RecordScreen.stopRecording().catch((error) =>
+                console.warn(error)
+            );
+            if (res) {
+                const url = res.result.outputURL;
+                console.log("Url: " + url)
+                this.setState({
+                    isRecording: false,
+                    currentVideoUrl: res.result.outputURL
+                })
+            }
+            console.log("Stop Recording.")
+        } else {
+            RecordScreen.startRecording().catch((error) => console.error(error));
+            this.setState({
+                isRecording: true,
+            })
+            console.log("Start Recording.")
+        }
+    }
+
+    componentWillUnmount() {
+        RecordScreen.clean();
+    }
+
+
     render() {
         if (this.state.isLoading) {
             return (
@@ -130,6 +163,7 @@ export default class CanvasScreen extends Component {
 
                     <View style={{ flex: 1, flexDirection: 'row' }}>
                         <RNSketchCanvas
+                            style={{}}
                             containerStyle={{ backgroundColor: 'transparent', flex: 1 }}
                             canvasStyle={{ backgroundColor: 'transparent', flex: 1 }}
                             defaultStrokeIndex={0}
@@ -142,7 +176,6 @@ export default class CanvasScreen extends Component {
                                     mode: 'AspectFill',
                                 }
                             }
-                            closeComponent={<View style={styles.functionButton}><Text style={{ color: 'white' }}>Close</Text></View>}
                             undoComponent={<View style={styles.functionButton}><Text style={{ color: 'white' }}>Undo</Text></View>}
                             clearComponent={<View style={styles.functionButton}><Text style={{ color: 'white' }}>Clear</Text></View>}
                             eraseComponent={<View style={styles.functionButton}><Text style={{ color: 'white' }}>Eraser</Text></View>}
@@ -151,7 +184,7 @@ export default class CanvasScreen extends Component {
                             )}
                             strokeSelectedComponent={(color, index, changed) => {
                                 return (
-                                    <View style={[{ backgroundColor: color, borderWidth: 2 }, styles.strokeColorButton]} />
+                                    <View style={[{ backgroundColor: color, borderWidth: 5 }, styles.strokeColorButton]} />
                                 )
                             }}
                             strokeWidthComponent={(w) => {
@@ -175,6 +208,15 @@ export default class CanvasScreen extends Component {
                             }}
                             onSketchSaved={(success, filePath) => { alert('filePath: ' + filePath); }}
                         />
+                    </View>
+                    <View style={styles.bottomRow}>
+
+                        <TouchableOpacity
+                            onPress={() => { this.startStopRecording(); }}>
+                            <Image source={require("../../images/recordButton.png")}
+                                style={styles.recordImage}
+                            />
+                        </TouchableOpacity>
                     </View>
 
                 </View>

@@ -9,6 +9,7 @@ import Register from './src/Register';
 import SplashScreen from './src/SplashScreen';
 import MainScreen from './src/MainScreen';
 import CanvasScreen from './src/CanvasScreen';
+import ScreenRecordTest from './src/ScreenRecordTest';
 
 const Stack = createStackNavigator();
 
@@ -22,6 +23,7 @@ const App = () => {
         <Stack.Screen name="Register" component={Register} />
         <Stack.Screen name="MainScreen" component={MainScreen} />
         <Stack.Screen name="CanvasScreen" component={CanvasScreen} />
+        <Stack.Screen name="ScreenRecordTest" component={ScreenRecordTest} />
 
       </Stack.Navigator>
 

@@ -58,34 +58,36 @@ export default class Signup extends Component {
             )
         }
         return (
-            <View style={styles.container} >
+            <ImageBackground source={require('../../images/bgsplash.png')} style={styles.container} >
 
                 <View style={styles.header}>
-                    <Image
-                        source={require('../../images/bgsplash.png')}
-                    />
-                    <Text style={styles.text_header}>Register</Text>
+                    <Text style={styles.text_header}>Welcome</Text>
                 </View>
 
 
                 <View style={styles.footer}>
-                    <Text style={styles.text_header}>Register</Text>
+                    <Text style={styles.footer_heading}>Register</Text>
                     <View style={styles.container}>
                         <TextInput
                             style={styles.inputStyle}
                             placeholder="Name"
+                            placeholderTextColor="#ccc"
                             value={this.state.displayName}
                             onChangeText={(val) => this.updateInputVal(val, 'displayName')}
                         />
                         <TextInput
                             style={styles.inputStyle}
                             placeholder="Email"
+                            placeholderTextColor="#ccc"
+                            autoCapitalize="none"
                             value={this.state.email}
                             onChangeText={(val) => this.updateInputVal(val, 'email')}
                         />
                         <TextInput
                             style={styles.inputStyle}
                             placeholder="Password"
+                            autoCapitalize="none"
+                            placeholderTextColor="#ccc"
                             value={this.state.password}
                             onChangeText={(val) => this.updateInputVal(val, 'password')}
                             maxLength={15}
@@ -105,7 +107,7 @@ export default class Signup extends Component {
                     </View>
                 </View>
 
-            </View>
+            </ImageBackground>
         )
     }
 };

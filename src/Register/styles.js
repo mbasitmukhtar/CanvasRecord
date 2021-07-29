@@ -10,7 +10,6 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
-        padding: 20,
     },
 
     footer: {
@@ -22,6 +21,13 @@ const styles = StyleSheet.create({
     },
 
     text_header: {
+        color: '#fff',
+        fontWeight: 'bold',
+        fontSize: 30,
+        padding: 20,
+    },
+
+    footer_heading: {
         color: '#000',
         fontWeight: 'bold',
         fontSize: 30
@@ -51,8 +57,9 @@ const styles = StyleSheet.create({
         marginBottom: 15,
         paddingBottom: 15,
         alignSelf: "center",
-        borderColor: "#ccc",
-        borderBottomWidth: 1
+        borderColor: "#000",
+        borderBottomWidth: 1,
+        color: "#000"
     },
     loginText: {
         color: '#3740FE',
