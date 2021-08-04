@@ -24,6 +24,7 @@
     "react-native-record-screen": "^0.3.2",
     "react-native-safe-area-context": "^3.2.0",
     "react-native-screens": "^3.4.0",
+    "react-native-video": "^5.1.1",
     "react-navigation": "^4.4.4",
     "rn-fetch-blob": "^0.12.0"
   },

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Text, View, TouchableOpacity, Button, Image, FlatList, ImageBackground, ActivityIndicator } from 'react-native';
 import styles from './styles'
 import firebase from '../../database/firebase';
+import { data } from '../../utils/data'
 
 const numColumns = 2;
 
@@ -23,17 +24,26 @@ export default class MainScreen extends Component {
 
     signOut = () => {
         firebase.auth().signOut().then(() => {
-            this.props.navigation.navigate('Login')
+            // this.props.navigation.navigate('Login')
         })
             .catch(error => this.setState({ errorMessage: error.message }))
     }
 
-    getDataFromAPI = async () => {
-        const endpoint = 'https://jsonplaceholder.typicode.com/photos?_limit=7'
-        const res = await fetch(endpoint)
-        const data = await res.json()
-        this.setState({ items: data })
+    getDataFromAPI = () => {
+        // console.log(data)
+        // const theData = JSON.stringify(data);
+        // console.log(theData)
+
+        this.setState({ items: data.quiz })
+        console.log(this.state.items)
     }
+
+    // getDataFromAPI = async () => {
+    //     const endpoint = 'https://jsonplaceholder.typicode.com/photos?_limit=7'
+    //     const res = await fetch(endpoint)
+    //     const data = await res.json()
+    //     this.setState({ items: data })
+    // }
 
     formatData = (items, numColumns) => {
         const numberOfFullRows = Math.floor(items.length / numColumns)
@@ -41,9 +51,10 @@ export default class MainScreen extends Component {
         let numberOfElementsLastRow = items.length - (numberOfFullRows * numColumns)
         while (numberOfElementsLastRow !== numColumns && numberOfElementsLastRow !== 0) {
             const idVal = "blank- ${numberOfElementsLastRow}"
+
             items.push({
-                id: idVal,
-                empty: true
+                questionId: idVal,
+                empty: true,
             })
             numberOfElementsLastRow = numberOfElementsLastRow + 1
         }
@@ -66,10 +77,10 @@ export default class MainScreen extends Component {
         }
         return (
             <View style={styles.card}>
-                <TouchableOpacity style={styles.cardContainer} onPress={() => this.goToNextScreen(item.url)}>
-                    <Image style={styles.cardImage} source={{ uri: item.url }}></Image>
+                <TouchableOpacity style={styles.cardContainer} onPress={() => this.goToNextScreen(item.questionImg)}>
+                    <Image style={styles.cardImage} source={{ uri: item.questionImg }}></Image>
                 </TouchableOpacity>
-                <Text style={styles.cardText}>{item.title}</Text>
+                <Text style={styles.cardText}>Question {item.questionNumber}</Text>
             </View>
         )
     }
@@ -88,7 +99,7 @@ export default class MainScreen extends Component {
                 <View style={styles.container}>
                     <FlatList
                         numColumns={numColumns}
-                        style={styles.container}
+                        style={styles.listContainer}
                         data={this.formatData(items, numColumns)}
                         // data={items}
                         keyExtractor={(item, index) => index.toString()}

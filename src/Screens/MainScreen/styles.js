@@ -7,8 +7,12 @@ const styles = StyleSheet.create({
 
     container: {
         flex: 1,
-        margin: 5,
         paddingTop: '10%',
+    },
+
+    listContainer: {
+        flex: 1,
+        margin: 10,
     },
 
     loader: {
@@ -18,6 +22,8 @@ const styles = StyleSheet.create({
     },
 
     card: {
+        alignItems: 'center',
+
         flex: 1,
         margin: 10,
     },

@@ -55,6 +55,32 @@ const styles = StyleSheet.create({
         width: 50,
         height: 50,
     },
+
+
+    videoPlayer: {
+        flex: 1,
+        padding: 20,
+        justifyContent: 'center',
+    },
+
+    button: {
+        backgroundColor: '#000',
+        padding: 20,
+        margin: 20,
+        width: '50%'
+    },
+
+    buttonText: {
+        color: '#fff',
+    },
+
+    videoPlayer: {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        bottom: 0,
+        right: 0,
+    },
 });
 
 export default styles

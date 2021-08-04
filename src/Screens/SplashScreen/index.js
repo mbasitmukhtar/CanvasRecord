@@ -3,6 +3,7 @@ import { StyleSheet, View, Text, Image } from 'react-native';
 import firebase from '../../database/firebase';
 import styles from './styles'
 
+
 export default class SplashScreen extends Component {
 
     constructor() {
@@ -10,13 +11,18 @@ export default class SplashScreen extends Component {
         this.state = {
             isLoggedIn: false
         }
-        this.checkAuthState();
+        // this.checkAuthState();
+        this.startTimer();
     }
 
-    // startTimer = () => {
-    //     setTimeout = (() => {
-    //     }, 3000);
-    // }
+    startTimer = () => {
+        this.interval = setInterval(
+            () => {
+                this.props.navigation.navigate("Login")
+            },
+            1000
+        );
+    }
 
     checkAuthState = () => {
         firebase.auth().onAuthStateChanged((user) => {

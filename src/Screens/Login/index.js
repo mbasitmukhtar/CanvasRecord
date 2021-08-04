@@ -40,7 +40,7 @@ export default class Login extends Component {
                         password: ''
                     })
 
-                    this.props.navigation.navigate('MainScreen')
+                    // this.props.navigation.navigate('MainScreen')
                 })
                 .catch(error => {
                     this.setState({ errorMessage: error.message });

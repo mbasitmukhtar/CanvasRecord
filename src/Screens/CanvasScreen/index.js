@@ -15,6 +15,7 @@ import RNSketchCanvas from '@terrylinla/react-native-sketch-canvas';
 // Import RNFetchBlob for the file download
 import RNFetchBlob from 'rn-fetch-blob';
 import RecordScreen from 'react-native-record-screen';
+import Video from 'react-native-video';
 
 export default class CanvasScreen extends Component {
 
@@ -25,6 +26,9 @@ export default class CanvasScreen extends Component {
             password: '',
             isLoading: true,
             isRecording: false,
+            displayTimer: false,
+            displayVideo: false,
+            timer: 5,
             currentVideoUrl: '',
         }
     }
@@ -120,32 +124,64 @@ export default class CanvasScreen extends Component {
     }
 
     startStopRecording = async () => {
-        // recording start
         if (this.state.isRecording) {
-            // recording stop
+            // stop recording 
             const res = await RecordScreen.stopRecording().catch((error) =>
                 console.warn(error)
             );
             if (res) {
                 const url = res.result.outputURL;
-                console.log("Url: " + url)
+                console.log("Recording Url: " + url)
                 this.setState({
                     isRecording: false,
-                    currentVideoUrl: res.result.outputURL
+                    currentVideoUrl: res.result.outputURL,
+                    displayVideo: true,
                 })
             }
             console.log("Stop Recording.")
         } else {
-            RecordScreen.startRecording().catch((error) => console.error(error));
+            // recording start
             this.setState({
-                isRecording: true,
+                displayTimer: true,
             })
-            console.log("Start Recording.")
+
+            this.interval = setInterval(
+                () => this.setState((prevState) => ({ timer: prevState.timer - 1 })),
+                1000
+            );
+
+        }
+    }
+
+    startRecording = () => {
+        RecordScreen.startRecording().catch((error) => {
+            console.error("Found Error: " + error);
+            this.setState({
+                timer: 5,
+                displayTimer: false,
+                isRecording: false,
+            })
+        });
+        this.setState({
+            isRecording: true,
+        })
+        console.log("Start Recording.")
+    }
+
+    componentDidUpdate() {
+        if (this.state.timer === 0) {
+            clearInterval(this.interval);
+            this.startRecording();
+            this.setState({
+                timer: 5,
+                displayTimer: false,
+            })
         }
     }
 
     componentWillUnmount() {
         RecordScreen.clean();
+        clearInterval(this.interval);
     }
 
 
@@ -157,23 +193,53 @@ export default class CanvasScreen extends Component {
                 </View>
             )
         }
+        else if (this.state.displayTimer) {
+            return (
+                <View style={{
+                    flex: 1, justifyContent: 'center', alignItems: 'center',
+                    backgroundColor: '#fff',
+                    opacity: 0.9
+                }}>
+                    <Text style={{ fontSize: 96, }}> {this.state.timer}  </Text>
+                </View>
+            )
+        }
+        else if (this.state.displayVideo) {
+            return (
+                <View style={styles.container}>
+                    <Video source={{ uri: this.state.currentVideoUrl }}   // Can be a URL or a local file.
+                        // onError={this.videoError}  
+                        style={styles.videoPlayer}
+                        controls
+                    />
+                    <View>
+                        <TouchableOpacity
+                            onPress={() => { this.props.navigation.navigate('MainScreen') }}
+                            style={styles.button}
+                        >
+                            <Text style={styles.buttonText}>Home</Text>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+            )
+        }
         else {
             return (
                 <View style={styles.container}>
 
                     <View style={{ flex: 1, flexDirection: 'row' }}>
                         <RNSketchCanvas
-                            style={{}}
-                            containerStyle={{ backgroundColor: 'transparent', flex: 1 }}
-                            canvasStyle={{ backgroundColor: 'transparent', flex: 1 }}
+                            containerStyle={{ backgroundColor: 'transparent', flex: 1, }}
+                            canvasStyle={{ backgroundColor: 'transparent', flex: 1, }}
                             defaultStrokeIndex={0}
                             defaultStrokeWidth={5}
                             localSourceImage={
                                 {
                                     // filename: '/storage/emulated/0/Pictures/image.png',
                                     filename: this.imageName,
+
                                     directory: '',
-                                    mode: 'AspectFill',
+                                    mode: 'AspectFit',
                                 }
                             }
                             undoComponent={<View style={styles.functionButton}><Text style={{ color: 'white' }}>Undo</Text></View>}
