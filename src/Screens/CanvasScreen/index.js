@@ -207,19 +207,19 @@ export default class CanvasScreen extends Component {
         else if (this.state.displayVideo) {
             return (
                 <View style={styles.container}>
-                    <Video source={{ uri: this.state.currentVideoUrl }}   // Can be a URL or a local file.
-                        // onError={this.videoError}  
-                        style={styles.videoPlayer}
-                        controls
-                    />
-                    <View>
-                        <TouchableOpacity
-                            onPress={() => { this.props.navigation.navigate('MainScreen') }}
-                            style={styles.button}
-                        >
-                            <Text style={styles.buttonText}>Home</Text>
-                        </TouchableOpacity>
+                    <View style={styles.videoContainer}>
+                        <Video source={{ uri: this.state.currentVideoUrl }}   // Can be a URL or a local file.
+                            // onError={this.videoError}  
+                            style={styles.videoPlayer}
+                            controls
+                        />
                     </View>
+
+                    <TouchableOpacity
+                        onPress={() => { this.props.navigation.navigate('MainScreen') }}
+                        style={styles.button}>
+                        <Text style={styles.buttonText}>Home</Text>
+                    </TouchableOpacity>
                 </View>
             )
         }

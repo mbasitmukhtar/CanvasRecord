@@ -35,7 +35,7 @@ export default class MainScreen extends Component {
         // console.log(theData)
 
         this.setState({ items: data.quiz })
-        console.log(this.state.items)
+        console.log("items: " + this.state.items)
     }
 
     // getDataFromAPI = async () => {
