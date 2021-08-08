@@ -12,7 +12,7 @@ export default class SplashScreen extends Component {
             isLoggedIn: false
         }
         // this.checkAuthState();
-        this.startTimer();
+        // this.startTimer();
     }
 
     startTimer = () => {
@@ -24,25 +24,25 @@ export default class SplashScreen extends Component {
         );
     }
 
-    checkAuthState = () => {
-        firebase.auth().onAuthStateChanged((user) => {
-            if (user) {
-                var uid = user.uid;
-                this.setState({
-                    isLoggedIn: true
-                })
-                this.props.navigation.navigate('MainScreen');
+    // checkAuthState = () => {
+    //     firebase.auth().onAuthStateChanged((user) => {
+    //         if (user) {
+    //             var uid = user.uid;
+    //             this.setState({
+    //                 isLoggedIn: true
+    //             })
+    //             this.props.navigation.navigate('MainScreen');
 
-            } else {
-                this.setState({
-                    isLoggedIn: false
-                })
-                firebase.auth().signOut();
-                this.props.navigation.navigate('Login');
+    //         } else {
+    //             this.setState({
+    //                 isLoggedIn: false
+    //             })
+    //             firebase.auth().signOut();
+    //             this.props.navigation.navigate('Login');
 
-            }
-        });
-    }
+    //         }
+    //     });
+    // }
 
 
     render() {

@@ -3,7 +3,7 @@ import { View, Text, Image, ImageBackground, TextInput, Button, ActivityIndicato
 import styles from './styles'
 import firebase from '../../database/firebase';
 
-export default class Signup extends Component {
+export default class Register extends Component {
 
     constructor() {
         super();
@@ -101,7 +101,8 @@ export default class Signup extends Component {
 
                         <Text
                             style={styles.loginText}
-                            onPress={() => this.props.navigation.navigate('Login')}>
+                            onPress={() => this.props.navigation.navigate('Login')}
+                        >
                             Already Registered? Click here to login
                         </Text>
                     </View>
