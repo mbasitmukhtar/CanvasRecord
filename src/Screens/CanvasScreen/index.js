@@ -26,6 +26,7 @@ export default class CanvasScreen extends Component {
             email: '',
             password: '',
             isLoading: true,
+            imageAddress: '',
             isRecording: false,
             displayTimer: false,
             displayVideo: false,
@@ -112,6 +113,23 @@ export default class CanvasScreen extends Component {
                     // If permission denied then show alert
                     alert('Storage Permission Not Granted');
                 }
+
+                const granted1 = await PermissionsAndroid.request(
+                    PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
+                    {
+                        title: 'Storage READ Permission Required',
+                        message:
+                            'App needs access to your storage to download Photos',
+                    }
+                );
+                if (granted1 === PermissionsAndroid.RESULTS.GRANTED) {
+                    // Once user grant the permission start downloading
+                    console.log('Storage READ Permission Granted.');
+                } else {
+                    // If permission denied then show alert
+                    alert('Storage READ Permission Not Granted');
+                }
+
             } catch (err) {
                 // To handle permission related exception
                 console.warn(err);
@@ -149,7 +167,7 @@ export default class CanvasScreen extends Component {
         };
 
         this.imageName = options.addAndroidDownloads.path;
-        console.log(this.imageName)
+        console.log("this.imageName: " + this.imageName)
 
         config(options)
             .fetch('GET', image_URL)
@@ -158,6 +176,7 @@ export default class CanvasScreen extends Component {
                 console.log('res -> ', JSON.stringify(res));
                 this.setState({
                     isLoading: false,
+                    imageAddress: this.imageName,
                 })
                 // alert('Image Downloaded Successfully.');
             });
@@ -226,7 +245,8 @@ export default class CanvasScreen extends Component {
     render() {
         let fullScreen = this.state.fullScreen;
         const { imageUrl } = this.props.route.params;
-
+        let imageAddress = this.state.imageAddress;
+        console.log("ImageAddress: " + imageAddress)
         if (this.state.isLoading) {
             return (
                 <View style={styles.preloader}>
@@ -277,7 +297,7 @@ export default class CanvasScreen extends Component {
                             localSourceImage={
                                 {
                                     // filename: '/storage/emulated/0/Pictures/image.png',
-                                    filename: this.imageName,
+                                    filename: imageAddress,
                                     // filename: { require(imageUrl) },
                                     directory: '',
                                     mode: 'AspectFit',
