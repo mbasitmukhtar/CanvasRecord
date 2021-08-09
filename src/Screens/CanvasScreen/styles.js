@@ -36,11 +36,26 @@ const styles = StyleSheet.create({
         // borderRadius: 15,
         justifyContent: 'center', alignItems: 'center', backgroundColor: '#39579A'
     },
+
+    strokeWidthComponentStyle: {
+        // backgroundColor: 'white', marginHorizontal: 2.5,
+        // width: Math.sqrt(w / 3) * 10, height: Math.sqrt(w / 3) * 10, borderRadius: Math.sqrt(w / 3) * 10 / 2
+    },
+
     functionButton: {
         marginHorizontal: 2.5, marginVertical: 8, height: 30, width: 60,
         backgroundColor: '#39579A',
         justifyContent: 'center',
         alignItems: 'center',
+        // borderRadius: 5,
+    },
+
+    functionButtonZero: {
+        height: 0,
+        // marginHorizontal: 2.5, marginVertical: 8, height: 0, width: 60,
+        // backgroundColor: '#39579A',
+        // justifyContent: 'center',
+        // alignItems: 'center',
         // borderRadius: 5,
     },
 
